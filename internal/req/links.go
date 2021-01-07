@@ -7,4 +7,4 @@ const BASEURL string = "https://api.mundipagg.com/core/v1"
 const CUSTOMERURL string = BASEURL + "/customers/cus_"
 
 // SUBSCRIPTIONURL Link to make a subscription
-const SUBSCRIPTIONURL string = BASEURL + "/subscriptions."
+const SUBSCRIPTIONURL string = BASEURL + "/subscriptions"
