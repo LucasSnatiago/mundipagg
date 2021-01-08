@@ -47,6 +47,14 @@ type Subscription struct {
 
 	// Price for the first payment (the setup)
 	Setup Setup `json:"setup"`
+
+	// GatewayAffiliationID affiliation id gived by the store
+	GatewayAffiliationID string `json:"gateway_affiliation_id,omitempty"`
+	// BoletoDueDays Days to expire the boleto, not passing
+	BoletoDueDays int32 `json:"boleto_due_days,omitempty"`
+
+	// Metadata extra information to the subscription
+	Metadata interface{} // TODO -------------
 }
 
 /* PaymentMethods
@@ -216,6 +224,7 @@ type Setup struct {
 // Payment struct for a payment
 type Payment struct {
 	PaymentMethod string `json:"payment_method,omitempty"`
+	CreditCard
 }
 
 /* PaymentMethods definitions
