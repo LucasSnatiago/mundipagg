@@ -2,10 +2,32 @@ package mundipagg
 
 // Precification schemas to precify the items for the products
 type Precification struct {
-	Price         int64          `json:"price,omitempty"`
-	MinimumPrice  int64          `json:"minimum_price,omitempty"`
-	SchemaType    string         `json:"schema_type,omitempty"`
+	Price        int64 `json:"price,omitempty"`
+	MinimumPrice int64 `json:"minimum_price,omitempty"`
+
+	// Schema types
+	// If choose unit please provide a price and a minimum_price
+	SchemaType string `json:"schema_type,omitempty"`
+
+	// Only works with package, volume e tier.
 	PriceBrackets []PriceBracket `json:"price_brackets,omitempty"`
+}
+
+/* SchemaTypes
+1 - unit
+2 - package
+3 - volume
+4 - tier
+*/
+func (p Precification) SchemaTypes(schemaTypes int) string {
+	schemas := map[int]string{
+		1: "unit",
+		2: "package",
+		3: "volume",
+		4: "tier",
+	}
+
+	return schemas[schemaTypes]
 }
 
 // PriceBracket Struct to hold all the intervals for counting the final price

@@ -44,6 +44,9 @@ type Subscription struct {
 
 	// Subscription items
 	Items []Item `json:"items,omitempty"`
+
+	// Price for the first payment (the setup)
+	Setup Setup `json:"setup"`
 }
 
 /* PaymentMethods
@@ -201,4 +204,34 @@ func (i Item) StatusTypes(statusType int) string {
 	}
 
 	return status[statusType]
+}
+
+// Setup for the payments
+type Setup struct {
+	Amount      int32   `json:"amount"`
+	Description string  `json:"description"`
+	Payment     Payment `json:"payment"`
+}
+
+// Payment struct for a payment
+type Payment struct {
+	PaymentMethod string `json:"payment_method,omitempty"`
+}
+
+/* PaymentMethods definitions
+1 - credit_card
+2 - boleto
+3 - voucher TODO
+4 - bank_transfer TODO
+5 - safety_pay TODO
+6 - checkout TODO
+7 - cash TODO
+*/
+func (p Payment) PaymentMethods(paymentType int) string {
+	payment := map[int]string{
+		1: "credit_card",
+		2: "boleto",
+	}
+
+	return payment[paymentType]
 }
