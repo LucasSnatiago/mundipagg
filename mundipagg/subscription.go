@@ -2,6 +2,11 @@ package mundipagg
 
 import "time"
 
+// NewSubscription Return a New Subsscription
+func NewSubscription() *Subscription {
+	return &Subscription{}
+}
+
 // Subscription A structs to create a json to subscription
 type Subscription struct {
 	// Stores code
@@ -12,7 +17,7 @@ type Subscription struct {
 	Currency      string `json:"currency,omitempty"`
 
 	// Leave it empty if you want to start the subscription now
-	StartAt time.Time `json:"startAt,omitempty"`
+	StartAt *time.Time `json:"startAt,omitempty"`
 
 	// Minimum value in cents
 	MinimumPrice int32 `json:"minimum_price,omitempty"`
@@ -24,9 +29,12 @@ type Subscription struct {
 	// If BillingType is a exact day set this variable
 	BillingDay int32 `json:"billing_day,omitempty"`
 
+	// Description for the payment
+	Description string `json:"description,omitempty"`
+
 	// CREDIT CARD
 	// If the payments is credit card set the number of installments
-	Installments int32 `json:"installments,omityempty"`
+	Installments int32 `json:"installments,omitempty"`
 	// Text to appear on the credit card bill
 	StatementDescriptor string `json:"statement_descriptor,omitempty"`
 
@@ -34,19 +42,19 @@ type Subscription struct {
 	// The ID of the customer, needed if the customer variable is empty
 	CustomerID string `json:"customer_id,omitempty"`
 	// Customer, needed if the CustomerID is empty
-	Customer Customer `json:"customer,omitempty"`
+	Customer *Customer `json:"customer,omitempty"`
 
 	// Bill extras
 	// Discounts
-	Discounts []BillExtras `json:"discount,omitempty"`
+	Discounts *[]BillExtras `json:"discount,omitempty"`
 	// Increments
-	Increments []BillExtras `json:"increments,omitempty"`
+	Increments *[]BillExtras `json:"increments,omitempty"`
 
 	// Subscription items
-	Items []Item `json:"items,omitempty"`
+	Items *[]Item `json:"items,omitempty"`
 
 	// Price for the first payment (the setup)
-	Setup Setup `json:"setup"`
+	Setup *Setup `json:"setup,omitempty"`
 
 	// GatewayAffiliationID affiliation id gived by the store
 	GatewayAffiliationID string `json:"gateway_affiliation_id,omitempty"`
@@ -54,7 +62,7 @@ type Subscription struct {
 	BoletoDueDays int32 `json:"boleto_due_days,omitempty"`
 
 	// Metadata extra information to the subscription
-	Metadata interface{} // TODO -------------
+	//Metadata *interface{} // TODO -------------
 }
 
 /* PaymentMethods
@@ -62,14 +70,14 @@ type Subscription struct {
 2 - For Debit Payment
 3 - For Boleto
 */
-func (s Subscription) PaymentMethods(paymentType int) string {
+func (s *Subscription) PaymentMethods(paymentType int) {
 	paymentMethods := map[int]string{
 		1: "credit_card",
 		2: "debit_card",
 		3: "boleto",
 	}
 
-	return paymentMethods[paymentType]
+	s.PaymentMethod = paymentMethods[paymentType]
 }
 
 /* Currencys
@@ -84,7 +92,7 @@ func (s Subscription) PaymentMethods(paymentType int) string {
 9 - UYU
 10 - EUR
 */
-func (s Subscription) Currencys(currencyType int) string {
+func (s *Subscription) Currencys(currencyType int) {
 	currencys := map[int]string{
 		1:  "BRL",
 		2:  "ARS",
@@ -98,7 +106,7 @@ func (s Subscription) Currencys(currencyType int) string {
 		10: "EUR",
 	}
 
-	return currencys[currencyType]
+	s.Currency = currencys[currencyType]
 }
 
 /* Intervals
@@ -107,7 +115,7 @@ func (s Subscription) Currencys(currencyType int) string {
 3 - month
 4 - year
 */
-func (s Subscription) Intervals(intervalType int) string {
+func (s *Subscription) Intervals(intervalType int) {
 	interval := map[int]string{
 		1: "day",
 		2: "week",
@@ -115,7 +123,7 @@ func (s Subscription) Intervals(intervalType int) string {
 		4: "year",
 	}
 
-	return interval[intervalType]
+	s.Interval = interval[intervalType]
 }
 
 /* BillingTypes
@@ -123,14 +131,14 @@ func (s Subscription) Intervals(intervalType int) string {
 2 - postpaid
 3 - exact_day
 */
-func (s Subscription) BillingTypes(billingType int) string {
+func (s *Subscription) BillingTypes(billingType int) {
 	billing := map[int]string{
 		1: "prepaid",
 		2: "postpaid",
 		3: "exact_day",
 	}
 
-	return billing[billingType]
+	s.BillingType = billing[billingType]
 }
 
 // BillExtras extra information about discount and increments in the payments
@@ -141,35 +149,35 @@ type BillExtras struct {
 	DiscountType string `json:"discount"`
 	// Write the id if you want to inform the product to recive the discount or increment
 	// Leave empty if you want to apply to the entire bill
-	ItemID    string    `json:"item_id,omitempty"`
-	Status    string    `json:"status,omitempty"`
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	ItemID    string     `json:"item_id,omitempty"`
+	Status    string     `json:"status,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 }
 
 /* DiscountTypes
 1 - flat
 2 - percentage
 */
-func (bs BillExtras) DiscountTypes(discountType int) string {
+func (bs *BillExtras) DiscountTypes(discountType int) {
 	discount := map[int]string{
 		1: "flat",
 		2: "percentage",
 	}
 
-	return discount[discountType]
+	bs.DiscountType = discount[discountType]
 }
 
 /* StatusTypes
 1 - active
 2 - deleted
 */
-func (bs BillExtras) StatusTypes(statusType int) string {
+func (bs *BillExtras) StatusTypes(statusType int) {
 	status := map[int]string{
 		1: "active",
 		2: "deleted",
 	}
 
-	return status[statusType]
+	bs.Status = status[statusType]
 }
 
 // Item to the subscription
@@ -187,13 +195,13 @@ type Item struct {
 	Status string `json:"status,omitempty"`
 
 	// Created / Updated / Deleted
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	DeletedAt time.Time `json:"deleted_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 
 	// Discounts and increments for this item
-	Discounts  []BillExtras `json:"discounts,omitempty"`
-	Increments []BillExtras `json:"increments,omitempty"`
+	Discounts  *[]BillExtras `json:"discounts,omitempty"`
+	Increments *[]BillExtras `json:"increments,omitempty"`
 
 	// Item name
 	Name string `json:"name,omitempty"`
@@ -204,27 +212,27 @@ type Item struct {
 2 - inactive
 3 - deleted
 */
-func (i Item) StatusTypes(statusType int) string {
+func (i *Item) StatusTypes(statusType int) {
 	status := map[int]string{
 		1: "active",
 		2: "inactive",
 		3: "deleted",
 	}
 
-	return status[statusType]
+	i.Status = status[statusType]
 }
 
 // Setup for the payments
 type Setup struct {
-	Amount      int32   `json:"amount"`
-	Description string  `json:"description"`
-	Payment     Payment `json:"payment"`
+	Amount      int32    `json:"amount"`
+	Description string   `json:"description"`
+	Payment     *Payment `json:"payment"`
 }
 
 // Payment struct for a payment
 type Payment struct {
 	PaymentMethod string `json:"payment_method,omitempty"`
-	CreditCard
+	//CreditCard    string // TODO-----------
 }
 
 /* PaymentMethods definitions
@@ -236,11 +244,11 @@ type Payment struct {
 6 - checkout TODO
 7 - cash TODO
 */
-func (p Payment) PaymentMethods(paymentType int) string {
+func (p *Payment) PaymentMethods(paymentType int) {
 	payment := map[int]string{
 		1: "credit_card",
 		2: "boleto",
 	}
 
-	return payment[paymentType]
+	p.PaymentMethod = payment[paymentType]
 }

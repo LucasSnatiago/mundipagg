@@ -17,7 +17,7 @@ type CreditCard struct {
 	Recurrence bool `json:"recurrence,omitempty"`
 
 	// Metadata Extra information about the payment
-	Metadata interface{} // TODO ------------------------------------------
+	Metadata *interface{} // TODO ------------------------------------------
 
 	// Only for private label cards
 	ExtendedLimitEnabled bool `json:"extended_limit_enabled,omitempty"`
@@ -27,12 +27,12 @@ type CreditCard struct {
 	MerchantCategoryCode int32 `json:"merchant_id,omitempty"`
 
 	// Authentication
-	Authentication interface{} // TODO ----------------------
+	Authentication *interface{} // TODO ----------------------
 	// AutoRecovery from a offline fail
 	AutoRecovery bool `json:"auto_recovery,omitempty"`
 
 	// Payload for google pay, apple pay and samsung pay
-	Payload interface{} `json:"payload,omitempty"` // TODO ---------------
+	Payload *interface{} `json:"payload,omitempty"` // TODO ---------------
 }
 
 /* OperationTypes

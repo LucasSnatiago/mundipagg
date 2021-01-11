@@ -10,7 +10,7 @@ type Precification struct {
 	SchemaType string `json:"schema_type,omitempty"`
 
 	// Only works with package, volume e tier.
-	PriceBrackets []PriceBracket `json:"price_brackets,omitempty"`
+	PriceBrackets *[]PriceBracket `json:"price_brackets,omitempty"`
 }
 
 /* SchemaTypes

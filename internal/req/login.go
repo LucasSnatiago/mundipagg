@@ -7,15 +7,14 @@ import (
 
 // Login A struct that holds the login information
 type Login struct {
-	BasicAuthUserName  string `json:"basicAuthUserName"`
-	BasicAuthPassword  string `json:"basicAuthPassword"`
+	BasicAuthUserName  string
+	BasicAuthPassword  string
 	BasicSecretAuthKey string
-	// Define if the API is ready for production or for testing
-	IsProduction bool
+	Request            *Request
 }
 
 // NewMundipagg Create a Mundipagg object
-func NewMundipagg(basicAuthUserName string, basicAuthPassword string, basicSecretAuthKey string, isProduction bool) (*Login, error) {
+func NewMundipagg(basicAuthUserName string, basicAuthPassword string, basicSecretAuthKey string) (*Login, error) {
 	// Verify parameters
 	if utils.IsStringEmpty(basicAuthUserName) {
 		return nil, errors.New("Please provide basicAuthUserName")
@@ -34,7 +33,6 @@ func NewMundipagg(basicAuthUserName string, basicAuthPassword string, basicSecre
 		BasicAuthUserName:  basicAuthUserName,
 		BasicAuthPassword:  basicAuthPassword,
 		BasicSecretAuthKey: basicSecretAuthKey,
-		IsProduction:       isProduction,
 	}
 
 	return login, nil

@@ -2,28 +2,36 @@ package req
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"mundipagg-sdk/internal/utils"
 	"net/http"
 )
 
 // Request the high-level struct to do a request
 type Request struct {
-	Data           []byte `json:"data"`
-	IdempotencyKey string
+	Data           interface{} `json:"data,omitempty"`
+	IdempotencyKey string      `json:"idempotency_key,omitempty"`
 }
 
 // MakePostRequest do the low-level request
-func (r Request) MakePostRequest(l *Login, json []byte) {
-	url := BASEURL
-	fmt.Println("URL:>", url)
+func (l Login) MakePostRequest() Response {
+	url := SUBSCRIPTIONURL
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(json))
+	postData, err := json.Marshal(l.Request.Data)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(postData))
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(postData))
 
-	req.SetBasicAuth(l.BasicSecretAuthKey, "")
+	// Setting the headers to make the request
+	req.Header.Set("Authorization", "Basic "+utils.ToBase64(l.BasicSecretAuthKey+":"))
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Idempotency-key", r.IdempotencyKey)
+	req.Header.Set("Idempotency-Key", l.Request.IdempotencyKey)
 
+	// Running the request
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -31,8 +39,16 @@ func (r Request) MakePostRequest(l *Login, json []byte) {
 	}
 	defer resp.Body.Close()
 
-	fmt.Println("response Status:", resp.Status)
-	fmt.Println("response Headers:", resp.Header)
+	// Results of the request
 	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("response Body:", string(body))
+	fmt.Println(string(body))
+
+	// Saving the result
+	var response Response
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		panic(err)
+	}
+
+	return response
 }
