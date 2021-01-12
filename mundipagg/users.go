@@ -15,8 +15,8 @@ type Customer struct {
 	Address  *Address   `json:"address,omitempty"`
 	Phones   *Phones    `json:"phones,omitempty"`
 	Birthday *time.Time `json:"birthday,omitempty"`
-	// Metadata TODO
-	Metadata string `json:"metadata,omitempty"`
+	// Metadata Add some extra information
+	Metadata interface{} `json:"metadata,omitempty"`
 }
 
 // Address Constructing a address for the customers
