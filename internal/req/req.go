@@ -5,8 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"mundipagg-sdk/internal/utils"
 	"net/http"
+
+	"github.com/lusantisuper/Mundipagg-SDK-GO/internal/utils"
 )
 
 // Request the high-level struct to do a request

@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"mundipagg-sdk/internal/req"
-	"mundipagg-sdk/mundipagg"
+
+	"github.com/lusantisuper/Mundipagg-SDK-GO/internal/req"
+	"github.com/lusantisuper/Mundipagg-SDK-GO/mundipagg"
 )
 
 // NewMundipagg Create a Mundipagg object
