@@ -62,7 +62,7 @@ type Subscription struct {
 	BoletoDueDays int32 `json:"boleto_due_days,omitempty"`
 
 	// Metadata extra information to the subscription
-	//Metadata *interface{} // TODO -------------
+	Metadata interface{} `json:"metadata,omitempty"`
 }
 
 /* PaymentMethods
@@ -194,6 +194,9 @@ type Item struct {
 	// Item status
 	Status string `json:"status,omitempty"`
 
+	// PricingSchema schema of the pricing
+	PricingSchema *PriceSchema `json:"pricing_scheme,omitempty"`
+
 	// Created / Updated / Deleted
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
@@ -231,8 +234,23 @@ type Setup struct {
 
 // Payment struct for a payment
 type Payment struct {
+	// PaymentMethod Choose the payment method
 	PaymentMethod string `json:"payment_method,omitempty"`
-	//CreditCard    string // TODO-----------
+	// CreditCard if want credit card, add it here
+	CreditCard *CreditCard `json:"credit_card,omitempty"`
+	// Voucher
+	Voucher interface{} `json:"voucher,omitempty"`
+	// Boleto if wants boleto, add it here
+	Boleto       *Boleto     `json:"boleto,omitempty"`
+	BankTransfer interface{} `json:"bank_transfer,omitempty"`
+	Checkout     interface{} `json:"checkout,omitempty"`
+	Cash         interface{} `json:"cash,omitempty"`
+	// Amount the price in cents
+	Amount int64 `json:"amount,omitempty"`
+	// Metadata adds the extra information here
+	Metadata interface{} `json:"metadata,omitempty"`
+	// GatewayAffiliationID your gateway affiliation ID
+	GatewayAffiliationID string `json:"gateway_affiliation_id,omitempty"`
 }
 
 /* PaymentMethods definitions

@@ -12,7 +12,7 @@ func NewMundipagg(basicAuthUserName string, basicAuthPassword string, basicSecre
 }
 
 func main() {
-	mund, err := NewMundipagg("acc_eOlrOxofM2TAjxnB", "pk_test_yWBnrNqc4YFjanQO", SECRETKEY)
+	mund, err := NewMundipagg(ACCOUNTSECRET, PASSWORDSECRET, SECRETKEY)
 	if err != nil {
 		panic(err)
 	}
@@ -20,7 +20,7 @@ func main() {
 	subs := mundipagg.NewSubscription()
 	subs.CustomerID = "cus_pL3yKGEsviMQo9Nz"
 	subs.MinimumPrice = 1000
-	subs.Description = "TESTE AVUL"
+	subs.Description = "TESTE AVULSO"
 	subs.BillingTypes(1)
 	subs.Currencys(1)
 	subs.Intervals(3)
@@ -33,6 +33,33 @@ func main() {
 	}
 	setup.Payment.PaymentMethods(2)
 	subs.Setup = &setup
+
+	subs.Setup.Payment.PaymentMethods(2)
+
+	boleto := &mundipagg.Boleto{
+		Instructions: "Pague o boleto!",
+		NossoNumero:  "123",
+	}
+	boleto.BankTypes(1)
+	boleto.BoletoTypes(1)
+
+	subs.Setup.Payment.Boleto = boleto
+
+	schema := &mundipagg.PriceSchema{
+		Price: 1000,
+	}
+	schema.SchemaTypes(1)
+
+	item := mundipagg.Item{
+		Name:          "Plano 1",
+		PricingSchema: schema,
+		Description:   "Este é o plano 1",
+		Quantity:      1,
+	}
+
+	items := make([]mundipagg.Item, 1)
+	items[0] = item
+	subs.Items = &items
 
 	mund.Request = &req.Request{
 		Data: subs,
