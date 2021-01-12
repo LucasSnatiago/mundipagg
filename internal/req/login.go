@@ -3,7 +3,7 @@ package req
 import (
 	"errors"
 
-	"github.com/lusantisuper/Mundipagg-SDK-GO/internal/utils"
+	"github.com/lusantisuper/Mundipagg_SDK_GO/internal/utils"
 )
 
 // Login A struct that holds the login information
