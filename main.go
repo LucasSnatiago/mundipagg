@@ -1,6 +1,6 @@
-package main
+package mundipagg
 
-import "github.com/lusantisuper/Mundipagg_SDK_GO/internal/req"
+import "github.com/lusantisuper/mundipagg/internal/req"
 
 // NewMundipagg Create a Mundipagg object
 func NewMundipagg(basicAuthUserName string, basicAuthPassword string, basicSecretAuthKey string) (*req.Login, error) {

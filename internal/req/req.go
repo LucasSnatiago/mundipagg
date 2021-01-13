@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/lusantisuper/Mundipagg_SDK_GO/internal/utils"
+	"github.com/lusantisuper/mundipagg/internal/utils"
 )
 
 // Request the high-level struct to do a request

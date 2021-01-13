@@ -1,3 +1,3 @@
-module github.com/lusantisuper/Mundipagg_SDK_GO
+module github.com/lusantisuper/mundipagg
 
 go 1.15
