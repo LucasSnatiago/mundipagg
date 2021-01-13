@@ -1,4 +1,4 @@
-package req
+package mundipagg
 
 import (
 	"bytes"
@@ -10,17 +10,9 @@ import (
 	"github.com/lusantisuper/mundipagg/internal/utils"
 )
 
-// Request the high-level struct to do a request
-type Request struct {
-	Data           interface{} `json:"data,omitempty"`
-	IdempotencyKey string      `json:"idempotency_key,omitempty"`
-}
-
 // MakePostRequest do the low-level request
-func (l Login) MakePostRequest() Response {
-	url := SUBSCRIPTIONURL
-
-	postData, err := json.Marshal(l.Request.Data)
+func MakePostRequest(data interface{}, secretKey string, indepotencyKey string, url string) (*Response, error) {
+	postData, err := json.Marshal(data)
 	if err != nil {
 		panic(err)
 	}
@@ -28,9 +20,9 @@ func (l Login) MakePostRequest() Response {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(postData))
 
 	// Setting the headers to make the request
-	req.Header.Set("Authorization", "Basic "+utils.ToBase64(l.BasicSecretAuthKey+":"))
+	req.Header.Set("Authorization", "Basic "+utils.ToBase64(secretKey+":"))
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Idempotency-Key", l.Request.IdempotencyKey)
+	req.Header.Set("Idempotency-Key", indepotencyKey)
 
 	// Running the request
 	client := &http.Client{}
@@ -48,8 +40,8 @@ func (l Login) MakePostRequest() Response {
 	var response Response
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return response
+	return &response, nil
 }

@@ -2,6 +2,17 @@ package mundipagg
 
 import "time"
 
+// NewCustomer Return a New Customer
+func (m mundipagg) NewCustomer(c Customer, indepotencyKey string) (string, error) {
+
+	resp, err := MakePostRequest(c, m.BasicSecretAuthKey, indepotencyKey, CUSTOMERURL)
+	if err != nil {
+		return "", err
+	}
+
+	return resp.ID, nil
+}
+
 // Customer Constructing a customer
 type Customer struct {
 	Name  string `json:"name,omitempty"`

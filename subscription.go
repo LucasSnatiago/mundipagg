@@ -2,9 +2,15 @@ package mundipagg
 
 import "time"
 
-// NewSubscription Return a New Subsscription
-func NewSubscription() *Subscription {
-	return &Subscription{}
+// NewSubscription Return a New Subscription
+func (m mundipagg) NewSubscription(s Subscription, indepotencyKey string) (string, error) {
+
+	resp, err := MakePostRequest(s, m.BasicSecretAuthKey, indepotencyKey, SUBSCRIPTIONURL)
+	if err != nil {
+		return "", err
+	}
+
+	return resp.ID, nil
 }
 
 // Subscription A structs to create a json to subscription

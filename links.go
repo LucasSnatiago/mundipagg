@@ -1,4 +1,4 @@
-package req
+package mundipagg
 
 // BASEURL Url for to send information to the API
 const BASEURL string = "https://api.mundipagg.com/core/v1"
