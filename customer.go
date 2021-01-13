@@ -20,7 +20,8 @@ type Customer struct {
 	// Refence client code in the store
 	Code string `json:"code,omitempty"`
 	// CPF or CNPJ
-	Document string     `json:"document,omitempty"`
+	Document string `json:"document,omitempty"`
+	// Type individual or company
 	Type     string     `json:"type,omitempty"`
 	Gender   string     `json:"gender,omitempty"`
 	Address  *Address   `json:"address,omitempty"`
@@ -28,6 +29,19 @@ type Customer struct {
 	Birthday *time.Time `json:"birthday,omitempty"`
 	// Metadata Add some extra information
 	Metadata interface{} `json:"metadata,omitempty"`
+}
+
+/* CustomerTypes
+1 - individual
+2 - company
+*/
+func (c *Customer) CustomerTypes(customerType int) {
+	customer := map[int]string{
+		1: "individual",
+		2: "company",
+	}
+
+	c.Type = customer[customerType]
 }
 
 // Address Constructing a address for the customers
