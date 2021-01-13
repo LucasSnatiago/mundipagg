@@ -22,7 +22,9 @@ func MakePostRequest(data interface{}, secretKey string, indepotencyKey string, 
 	// Setting the headers to make the request
 	req.Header.Set("Authorization", "Basic "+utils.ToBase64(secretKey+":"))
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Idempotency-Key", indepotencyKey)
+	if !utils.IsStringEmpty(indepotencyKey) {
+		req.Header.Set("Idempotency-Key", indepotencyKey)
+	}
 
 	// Running the request
 	client := &http.Client{}
