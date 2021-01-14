@@ -69,6 +69,8 @@ type Subscription struct {
 
 	// Card to make the credit or debit payment
 	Card *SubscriptionCards `json:"card,omitempty"`
+	// Boleto to make a boleto payment
+	Boleto *Boleto `json:"boleto,omitempty"`
 
 	// Metadata extra information to the subscription
 	Metadata interface{} `json:"metadata,omitempty"`
