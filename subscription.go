@@ -67,8 +67,19 @@ type Subscription struct {
 	// BoletoDueDays Days to expire the boleto, not passing
 	BoletoDueDays int32 `json:"boleto_due_days,omitempty"`
 
+	// Card to make the credit or debit payment
+	Card *SubscriptionCards `json:"card,omitempty"`
+
 	// Metadata extra information to the subscription
 	Metadata interface{} `json:"metadata,omitempty"`
+}
+
+// SubscriptionCards necessary card information to make a subscription payment
+type SubscriptionCards struct {
+	// CardID pass the mundipagg ID for the card
+	CardID string `json:"card_id,omitempty"`
+	// Token pass the mundipagg token for the card
+	Token string `json:"token,omitempty"`
 }
 
 /* PaymentMethods
