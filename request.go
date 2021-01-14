@@ -6,7 +6,6 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 
 	"github.com/lusantisuper/mundipagg/internal/utils"
 )
@@ -38,12 +37,7 @@ func MakePostRequest(data interface{}, secretKey string, indepotencyKey string, 
 	// Results of the request
 	body, _ := ioutil.ReadAll(resp.Body)
 
-	respCode, err := strconv.Atoi(resp.Status)
-	if err != nil {
-		return nil, errors.New("Wrong response code")
-	}
-
-	if respCode < 200 || respCode >= 400 {
+	if resp.StatusCode < 200 || resp.StatusCode >= 400 {
 		return nil, errors.New("Invalid Request:\nSended:\n" + string(postData) + "Received:\n" + string(body))
 	}
 
