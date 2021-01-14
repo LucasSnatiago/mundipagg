@@ -2,7 +2,7 @@ package mundipagg
 
 // Mundipagg struct that holds all functions working in the lib
 type Mundipagg interface {
-	NewSubscription(s Subscription, indepotencyKey string) (string, error)
+	NewSubscription(s Subscription, indepotencyKey string) (*Response, error)
 	NewCustomer(c Customer, indepotencyKey string) (string, error)
 }
 

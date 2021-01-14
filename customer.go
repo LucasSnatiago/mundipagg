@@ -3,14 +3,14 @@ package mundipagg
 import "time"
 
 // NewCustomer Return a New Customer
-func (m mundipagg) NewCustomer(c Customer, indepotencyKey string) (string, error) {
+func (m mundipagg) NewCustomer(c Customer, indepotencyKey string) (*Response, error) {
 
 	resp, err := MakePostRequest(c, m.BasicSecretAuthKey, indepotencyKey, CUSTOMERURL)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return resp.ID, nil
+	return resp, nil
 }
 
 // Customer Constructing a customer
