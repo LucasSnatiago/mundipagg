@@ -6,7 +6,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
-	"strings"
+	"strconv"
 
 	"github.com/lusantisuper/mundipagg/internal/utils"
 )
@@ -17,7 +17,7 @@ func MakePostRequest(data interface{}, secretKey string, indepotencyKey string, 
 	if err != nil {
 		panic(err)
 	}
-	//fmt.Println(string(postData))
+
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(postData))
 
 	// Setting the headers to make the request
@@ -37,10 +37,14 @@ func MakePostRequest(data interface{}, secretKey string, indepotencyKey string, 
 
 	// Results of the request
 	body, _ := ioutil.ReadAll(resp.Body)
-	//fmt.Println(string(body))
 
-	if strings.Compare(resp.Status, "200") != 0 {
-		return nil, errors.New("invalid request")
+	respCode, err := strconv.Atoi(resp.Status)
+	if err != nil {
+		return nil, errors.New("Wrong response code")
+	}
+
+	if respCode < 200 || respCode >= 400 {
+		return nil, errors.New("Invalid Request:\nSended:\n" + string(postData) + "Received:\n" + string(body))
 	}
 
 	// Saving the result
