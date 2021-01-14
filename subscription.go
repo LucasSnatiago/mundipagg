@@ -3,14 +3,14 @@ package mundipagg
 import "time"
 
 // NewSubscription Return a New Subscription
-func (m mundipagg) NewSubscription(s Subscription, indepotencyKey string) (string, error) {
+func (m mundipagg) NewSubscription(s Subscription, indepotencyKey string) (*Response, error) {
 
 	resp, err := MakePostRequest(s, m.BasicSecretAuthKey, indepotencyKey, SUBSCRIPTIONURL)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return resp.ID, nil
+	return resp, nil
 }
 
 // Subscription A structs to create a json to subscription
