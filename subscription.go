@@ -19,8 +19,9 @@ type Subscription struct {
 	Code string `json:"code,omitempty"`
 
 	// Setting the payment
-	PaymentMethod string `json:"payment_method,omitempty"`
-	Currency      string `json:"currency,omitempty"`
+	PaymentMethod string       `json:"payment_method,omitempty"`
+	Currency      string       `json:"currency,omitempty"`
+	PriceSchema   *PriceSchema `json:"pricing_scheme,omitempty"`
 
 	// Leave it empty if you want to start the subscription now
 	StartAt *time.Time `json:"startAt,omitempty"`
