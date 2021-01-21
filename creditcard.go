@@ -24,7 +24,8 @@ type CreditCard struct {
 	// Credit cards choose one
 	CardCredit *CreditCard `json:"credit_card,omitempty"`
 	CardID     string      `json:"card_id,omitempty"`
-	CardToken  interface{} /// TODO ------------------------------------------
+	// CardToken Mundipagg card token
+	CardToken string `json:"card_token,omitempty"`
 
 	// Recurrence define if this payment repeats or not (default not)
 	Recurrence bool `json:"recurrence,omitempty"`
