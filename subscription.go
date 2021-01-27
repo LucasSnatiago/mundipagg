@@ -3,7 +3,7 @@ package mundipagg
 import "time"
 
 // NewSubscription Return a New Subscription
-func (m mundipagg) NewSubscription(s Subscription, indepotencyKey string) (*Response, error) {
+func (m mundipagg) NewSubscription(s *Subscription, indepotencyKey string) (*Response, error) {
 
 	resp, err := MakePostRequest(s, m.BasicSecretAuthKey, indepotencyKey, SUBSCRIPTIONURL)
 	if err != nil {

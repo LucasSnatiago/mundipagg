@@ -3,7 +3,7 @@ package mundipagg
 import "time"
 
 // NewCustomer Return a New Customer
-func (m mundipagg) NewCustomer(c Customer, indepotencyKey string) (*Response, error) {
+func (m mundipagg) NewCustomer(c *Customer, indepotencyKey string) (*Response, error) {
 
 	resp, err := MakePostRequest(c, m.BasicSecretAuthKey, indepotencyKey, CUSTOMERURL)
 	if err != nil {
