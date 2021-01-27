@@ -11,13 +11,17 @@ import (
 )
 
 // MakePostRequest do the low-level request
-func MakePostRequest(data interface{}, secretKey string, indepotencyKey string, url string) (*Response, error) {
+func MakePostRequest(data interface{}, secretKey string, indepotencyKey string, url string, requestType ...string) (*Response, error) {
 	postData, err := json.Marshal(data)
 	if err != nil {
 		panic(err)
 	}
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(postData))
+	requestMethod := "POST"
+	if len(requestType) > 0 {
+		requestMethod = requestType[0]
+	}
+	req, err := http.NewRequest(requestMethod, url, bytes.NewBuffer(postData))
 
 	// Setting the headers to make the request
 	req.Header.Set("Authorization", "Basic "+utils.ToBase64(secretKey+":"))
