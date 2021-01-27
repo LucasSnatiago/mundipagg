@@ -23,7 +23,7 @@ type Subscription struct {
 	Currency      string `json:"currency,omitempty"`
 
 	// Leave it empty if you want to start the subscription now
-	StartAt *time.Time `json:"startAt,omitempty"`
+	StartAt *time.Time `json:"start_at,omitempty"`
 
 	// Minimum value in cents
 	MinimumPrice int32 `json:"minimum_price,omitempty"`
