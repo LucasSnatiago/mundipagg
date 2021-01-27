@@ -5,6 +5,7 @@ type Mundipagg interface {
 	NewSubscription(s *Subscription, indepotencyKey string) (*Response, error)
 	NewCustomer(c *Customer, indepotencyKey string) (*Response, error)
 	NewCardByToken(customerID string, cardToken string, indepotencyKey string) (*Response, error)
+	UpdateStartAt(u *UpdateStartAtSubscription, mundipaggCustomerID string, indepotencyKey string) (*Response, error)
 }
 
 // Login A struct that holds the login information
