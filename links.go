@@ -9,6 +9,9 @@ const CUSTOMERURL string = BASEURL + "customers"
 // SUBSCRIPTIONURL Link to make a subscription
 const SUBSCRIPTIONURL string = BASEURL + "subscriptions"
 
+// SUBSCRIPTIONUPDATENEXTBILLINGDAYURL end of the url for the billing date
+const SUBSCRIPTIONUPDATENEXTBILLINGDAYURL string = "/billing-date"
+
 // SUBSCRIPTIONUPDATESTARTATURL end of the subscription start at url
 const SUBSCRIPTIONUPDATESTARTATURL string = "/start-at"
 
