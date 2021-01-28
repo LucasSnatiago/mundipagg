@@ -17,3 +17,6 @@ const SUBSCRIPTIONUPDATESTARTATURL string = "/start-at"
 
 // CARDENDPOINT Links the customer to the credit card (ex: CUSTOMERURL + customer_id + "/cards")
 const CARDENDPOINT string = "cards"
+
+// DISCOUNTENDPOINT endpoint to add a discount
+const DISCOUNTENDPOINT string = "/discounts"
