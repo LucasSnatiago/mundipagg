@@ -41,12 +41,14 @@ func MakePostRequest(data interface{}, secretKey string, indepotencyKey string, 
 	// Results of the request
 	body, _ := ioutil.ReadAll(resp.Body)
 
+	// Saving the result
+	var response Response
+	response.MundipaggJSONAnswer = string(body)
+
 	if resp.StatusCode < 200 || resp.StatusCode >= 400 {
 		return nil, errors.New("Invalid Request:\nSended:\n" + string(postData) + "Received:\n" + string(body))
 	}
 
-	// Saving the result
-	var response Response
 	err = json.Unmarshal(body, &response)
 	if err != nil {
 		return nil, err
