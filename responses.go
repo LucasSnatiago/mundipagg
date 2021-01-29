@@ -11,5 +11,5 @@ type Response struct {
 	CreatedAt  *time.Time `json:"created_at,omitempty"`
 	UpdatedAt  *time.Time `json:"updated_at,omitempty"`
 	// MundipaggJSONAnswer The real json answer from Mundipagg
-	MundipaggJSONAnswer interface{}
+	MundipaggJSONAnswer string
 }
