@@ -163,9 +163,9 @@ func (s *Subscription) BillingTypes(billingType int) {
 // BillExtras extra information about discount and increments in the payments
 type BillExtras struct {
 	ID           string `json:"id,omitempty"`
-	Cycles       int32  `json:"cycles"`
-	Value        int32  `json:"value"`
-	DiscountType string `json:"discount"`
+	Cycles       int32  `json:"cycles,omitempty"`
+	Value        int32  `json:"value,omitempty"`
+	DiscountType string `json:"discount_type,omitempty"`
 	// Write the id if you want to inform the product to recive the discount or increment
 	// Leave empty if you want to apply to the entire bill
 	ItemID    string     `json:"item_id,omitempty"`
